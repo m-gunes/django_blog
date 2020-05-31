@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}dashboard{% endblock title %}
+
+{% block content %}
+
+
+<h1>Wellcome to dashboard</h1>
+<hr>
+
+<a href="{% url 'blog:addArticle'%}" class='btn btn-primary'>Add Article</a>
+<hr>
+
+<h3>Your Articles</h3>
+<hr>
+
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Date</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% if articles %}
+         {% for article in articles %}
+            <tr>
+               <th scope="row">{{article.id}}</th>
+               <td><a href="{% url 'blog:detail' article.id %}">{{article.title}}</a></td>
+               <td>{{article.author.username}}</td>
+               <td>{{article.created_at}}</td>
+               <td><a href="" class='btn btn-success'>Update</a></td>
+               <td><a href="" class='btn btn-danger'>Delete</a></td>
+            </tr>
+         {% endfor %}     
+   {% else %}
+      <tr>
+         <td scope="row">
+            <div class='alert alert-warning'>Article not found</div>
+         </td>
+      </tr>
+   {% endif %}
+  </tbody>
+</table>
+
+{% endblock content %}

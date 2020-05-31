@@ -9,5 +9,7 @@ app_name = 'blog'
 urlpatterns = [
    path('', views.index, name='index'),
    path('about/', views.about, name='about'),
-   path('detail/<int:id>', views.detail, name='detail'),
+   path('dashboard/', views.dashboard, name='dashboard'),
+   path('addArticle/', views.addArticle, name='addArticle'),
+   path('article/<int:id>/', views.detail, name='detail'),
 ]

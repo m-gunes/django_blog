@@ -10,7 +10,7 @@ class Article(models.Model):
    content = models.TextField()
    created_at = models.DateTimeField(auto_now_add=True)
 
-   def __str__(self):
+   def __str__(self): # Admin panelde title ile gostermek icin
       return self.title
       
 
