@@ -21,7 +21,7 @@ def about(request):
    return render(request, 'about.html', context)
 
 def detail(request, id):
-   article = Article.objects.filter(id=id)
+   article = Article.objects.filter(id=id).first()
    return render(request, 'detail.html', {'article': article})
 
 
