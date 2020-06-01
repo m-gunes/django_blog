@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .forms import ArticleForm
 from .models import Article
@@ -21,7 +21,10 @@ def about(request):
    return render(request, 'about.html', context)
 
 def detail(request, id):
-   article = Article.objects.filter(id=id).first()
+   # article = Article.objects.filter(id=id).first()
+   # article = Article.objects.get(id=id)
+   article = get_object_or_404(Article, id=id)
+   # https://docs.djangoproject.com/en/3.0/topics/http/shortcuts/#get-object-or-404
    return render(request, 'detail.html', {'article': article})
 
 
