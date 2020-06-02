@@ -34,7 +34,7 @@ def dashboard(request):
    return render(request, 'dashboard.html', {'articles': articles})
    
 def addArticle(request):
-   form = ArticleForm(request.POST or None)
+   form = ArticleForm(request.POST or None, request.FILES or None)
    if form.is_valid():
       # Create, but don't save the new article instance. commit=False
       article = form.save(commit=False)
@@ -45,5 +45,4 @@ def addArticle(request):
       
       messages.success(request, 'Article was successfully added')
       return redirect('blog:index')
-
    return render(request, 'addArticle.html', {'form': form})

@@ -7,15 +7,16 @@
  {% load crispy_forms_tags %}
 
    <div class="row justify-content-md-center">
-      <div class="col col-sm-4">
+      <div class="col col-sm-8">
          <h1>Add Article</h1>
          <hr>
       </div>
    </div>
    <div class="row justify-content-md-center">
-      <div class="col col-sm-4">
-         <form method='post' novalidate>
+      <div class="col col-sm-8">
+         <form method='post' novalidate enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.media }}
             {{ form|crispy }}
             <button type='submit' class='btn btn-warning'>ADD</button>
          </form>
