@@ -12,6 +12,15 @@ def index(request):
    # return HttpResponse('hello django world')
    return render(request, 'index.html')
 
+def articles(request):
+   keyword = request.GET.get('keyword')
+   if keyword:
+      articles = Article.objects.filter(title__icontains = keyword)
+      return render(request, 'articles.html', {'articles': articles})
+
+   articles = Article.objects.all() # return []
+   return render(request, 'articles.html', {'articles': articles})
+
 
 def about(request):
    context = {

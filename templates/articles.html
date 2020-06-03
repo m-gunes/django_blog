@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Articles{% endblock title %}
+
+{% block content %}
+
+<div class='row justify-content-between'>
+   <h1 class='col-2'>Articles</h1>
+   <form class="form-inline col-4">
+      {% csrf_token %}
+      <input name='keyword' class="form-control mr-sm-2" type="search" placeholder="Search" >
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+   </form>
+</div>
+<hr>
+   
+
+{% if articles %}
+
+   {% for article in articles %}
+      <a class='article-detail-link' href="{% url 'blog:detail' article.id %}">
+         <div class="media">
+            {% if article.image %}
+               <img src="{{article.image.url}}" class="img-fluid mr-3 rounded" alt="image">
+            {% endif %}
+            <div class="media-body">
+               <h5 class="mt-0">{{article.title}}</h5>
+               <div class='inline-block'>
+                  {{article.content|safe|truncatewords:30}}
+               </div>
+               <small>{{article.created_at}}</small>
+            </div>
+         </div>
+      </a>
+   {% endfor %}
+
+{% else %}
+   <div class='alert alert-warning'>Article was not found</div>
+{% endif %}
+
+{% endblock content %}
