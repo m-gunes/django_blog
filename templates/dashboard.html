@@ -32,8 +32,8 @@
                <td><a href="{% url 'blog:detail' article.id %}">{{article.title}}</a></td>
                <td>{{article.author.username}}</td>
                <td>{{article.created_at}}</td>
-               <td><a href="" class='btn btn-success'>Update</a></td>
-               <td><a href="" class='btn btn-danger'>Delete</a></td>
+               <td><a href="{% url 'blog:update' article.id %}" class='btn btn-success' >Update</a></td>
+               <td><a href="{% url 'blog:delete' article.id %}" class='btn btn-danger'>Delete</a></td>
             </tr>
          {% endfor %}     
    {% else %}

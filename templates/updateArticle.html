@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}addArticle{% endblock title %}
+
+{% block content %}
+
+ {% load crispy_forms_tags %}
+
+   <div class="row justify-content-md-center">
+      <div class="col col-sm-8">
+         <h1>Update Article</h1>
+         <hr>
+      </div>
+   </div>
+   <div class="row justify-content-md-center">
+      <div class="col col-sm-8">
+         <form method='post' novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form|crispy }}
+            <button type='submit' class='btn btn-warning'>Update</button>
+         </form>
+      </div>
+   </div>
+
+{% endblock content %}

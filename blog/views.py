@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .forms import ArticleForm
 from .models import Article
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -28,11 +29,14 @@ def detail(request, id):
    return render(request, 'detail.html', {'article': article})
 
 
+@login_required(login_url='user:login') 
 def dashboard(request):
    articles = Article.objects.filter(author=request.user) # dict olarak geliyor
    # try to request.user.id
    return render(request, 'dashboard.html', {'articles': articles})
-   
+
+
+@login_required(login_url='user:login') 
 def addArticle(request):
    form = ArticleForm(request.POST or None, request.FILES or None)
    if form.is_valid():
@@ -44,5 +48,26 @@ def addArticle(request):
       article.save()
       
       messages.success(request, 'Article was successfully added')
-      return redirect('blog:index')
+      return redirect('blog:dashboard')
    return render(request, 'addArticle.html', {'form': form})
+
+
+@login_required(login_url='user:login')
+def updateArticle(request, id):
+   article = get_object_or_404(Article, id=id)
+   form = ArticleForm(request.POST or None, request.FILES or None, instance=article)
+   if form.is_valid():
+      form.save()
+      messages.success(request, 'Article was successfully updated')
+      return redirect('blog:dashboard')
+   return render(request, 'updateArticle.html', {'form': form})
+
+
+@login_required(login_url='user:login')
+def deleteArticle(request, id):
+   article = get_object_or_404(Article, id=id)
+   article.delete()
+   mesage_with_title = 'Article was successfully deleted' + " ( " + article.title + ") "
+   messages.success(request, mesage_with_title)
+   return redirect('blog:dashboard')
+   
