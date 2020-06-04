@@ -15,6 +15,8 @@ class Article(models.Model):
 
    def __str__(self): # Admin panelde title ile gostermek icin
       return self.title
+   class Meta:
+      ordering = ['-created_at']
       
 
 class Comment(models.Model):
@@ -25,8 +27,12 @@ class Comment(models.Model):
    created_at = models.DateTimeField(auto_now_add=True)
    def __str__(self):
       return self.content
+   class Meta:
+      ordering = ['-created_at']
 
 
 # Notes
 # on_delete=models.CASCADE => auth_user table'indaki user silindiginde o user'in article'larinida siler
 # verbose_name='yazar' => admin panelini customize etmek icin. author yerine yazar gorunuyor.
+# ordering = ['-created_at'] descending order. son eklenen ilk basta
+# ordering = ['created_at'] ascending order.
