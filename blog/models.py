@@ -17,6 +17,15 @@ class Article(models.Model):
       return self.title
       
 
+class Comment(models.Model):
+   article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comment_list')
+   author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+   # author = models.CharField(max_length=150)
+   content = models.TextField(max_length=5000)
+   created_at = models.DateTimeField(auto_now_add=True)
+   def __str__(self):
+      return self.content
+
 
 # Notes
 # on_delete=models.CASCADE => auth_user table'indaki user silindiginde o user'in article'larinida siler

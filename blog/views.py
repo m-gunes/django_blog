@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from .models import Article
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -34,8 +34,23 @@ def detail(request, id):
    # article = Article.objects.filter(id=id).first()
    # article = Article.objects.get(id=id)
    article = get_object_or_404(Article, id=id)
+   comments = article.comment_list.all()
    # https://docs.djangoproject.com/en/3.0/topics/http/shortcuts/#get-object-or-404
-   return render(request, 'detail.html', {'article': article})
+   return render(request, 'detail.html', {'article': article, 'comments': comments})
+
+
+@login_required(login_url='user:login')
+def addComment(request, article_id):
+   article = get_object_or_404(Article, id=article_id)
+
+   form = CommentForm(request.POST or None)
+   if form.is_valid():
+      comment = form.save(commit=False)
+      comment.author = request.user
+      comment.article = article
+      comment.save()
+   return redirect('blog:detail', id=article_id)
+
 
 
 @login_required(login_url='user:login') 
