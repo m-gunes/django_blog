@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import ArticleForm, CommentForm
 from .models import Article
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+
+def getArticlesTitle(request):
+   articles = Article.objects.all().values('title', 'created_at')
+   return JsonResponse(list(articles), safe=False)
 
 
 # Create your views here.

@@ -15,5 +15,6 @@ urlpatterns = [
    path('article/<int:id>/', views.detail, name='detail'),
    path('update/<int:id>/', views.updateArticle, name='update'),
    path('delete/<int:id>', views.deleteArticle, name='delete'),
-   path('comment/<int:article_id>', views.addComment, name='comment')
+   path('comment/<int:article_id>', views.addComment, name='comment'),
+   path('articles/title/', views.getArticlesTitle, name='getArticlesTitle')
 ]
